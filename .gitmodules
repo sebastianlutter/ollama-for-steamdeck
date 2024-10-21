@@ -2,11 +2,3 @@
 	path = llm/llama.cpp
 	url = https://github.com/ggerganov/llama.cpp.git
 	shallow = true
-
-[submodule "llam/llama.cpp"]
-	path = llam/llama.cpp
-	url = https://githubfast.com/ggerganov/llama.cpp.git
-	shallow = true
-[submodule "llm/llama.cpp"]
-	path = llm/llama.cpp
-	url = https://githubfast.com/ggerganov/llama.cpp.git
