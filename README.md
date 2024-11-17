@@ -65,26 +65,28 @@ Ollama supports a list of models available on [ollama.com/library](https://ollam
 
 Here are some example models that can be downloaded:
 
-| Model              | Parameters | Size  | Download                       |
-| ------------------ | ---------- | ----- | ------------------------------ |
-| Llama 3.2          | 3B         | 2.0GB | `ollama run llama3.2`          |
-| Llama 3.2          | 1B         | 1.3GB | `ollama run llama3.2:1b`       |
-| Llama 3.1          | 8B         | 4.7GB | `ollama run llama3.1`          |
-| Llama 3.1          | 70B        | 40GB  | `ollama run llama3.1:70b`      |
-| Llama 3.1          | 405B       | 231GB | `ollama run llama3.1:405b`     |
-| Phi 3 Mini         | 3.8B       | 2.3GB | `ollama run phi3`              |
-| Phi 3 Medium       | 14B        | 7.9GB | `ollama run phi3:medium`       |
-| Gemma 2            | 2B         | 1.6GB | `ollama run gemma2:2b`         |
-| Gemma 2            | 9B         | 5.5GB | `ollama run gemma2`            |
-| Gemma 2            | 27B        | 16GB  | `ollama run gemma2:27b`        |
-| Mistral            | 7B         | 4.1GB | `ollama run mistral`           |
-| Moondream 2        | 1.4B       | 829MB | `ollama run moondream`         |
-| Neural Chat        | 7B         | 4.1GB | `ollama run neural-chat`       |
-| Starling           | 7B         | 4.1GB | `ollama run starling-lm`       |
-| Code Llama         | 7B         | 3.8GB | `ollama run codellama`         |
-| Llama 2 Uncensored | 7B         | 3.8GB | `ollama run llama2-uncensored` |
-| LLaVA              | 7B         | 4.5GB | `ollama run llava`             |
-| Solar              | 10.7B      | 6.1GB | `ollama run solar`             |
+| Model              | Parameters | Size  | Download                         |
+| ------------------ | ---------- | ----- | -------------------------------- |
+| Llama 3.2          | 3B         | 2.0GB | `ollama run llama3.2`            |
+| Llama 3.2          | 1B         | 1.3GB | `ollama run llama3.2:1b`         |
+| Llama 3.2 Vision   | 11B        | 7.9GB | `ollama run llama3.2-vision`     |
+| Llama 3.2 Vision   | 90B        | 55GB  | `ollama run llama3.2-vision:90b` |
+| Llama 3.1          | 8B         | 4.7GB | `ollama run llama3.1`            |
+| Llama 3.1          | 70B        | 40GB  | `ollama run llama3.1:70b`        |
+| Llama 3.1          | 405B       | 231GB | `ollama run llama3.1:405b`       |
+| Phi 3 Mini         | 3.8B       | 2.3GB | `ollama run phi3`                |
+| Phi 3 Medium       | 14B        | 7.9GB | `ollama run phi3:medium`         |
+| Gemma 2            | 2B         | 1.6GB | `ollama run gemma2:2b`           |
+| Gemma 2            | 9B         | 5.5GB | `ollama run gemma2`              |
+| Gemma 2            | 27B        | 16GB  | `ollama run gemma2:27b`          |
+| Mistral            | 7B         | 4.1GB | `ollama run mistral`             |
+| Moondream 2        | 1.4B       | 829MB | `ollama run moondream`           |
+| Neural Chat        | 7B         | 4.1GB | `ollama run neural-chat`         |
+| Starling           | 7B         | 4.1GB | `ollama run starling-lm`         |
+| Code Llama         | 7B         | 3.8GB | `ollama run codellama`           |
+| Llama 2 Uncensored | 7B         | 3.8GB | `ollama run llama2-uncensored`   |
+| LLaVA              | 7B         | 4.5GB | `ollama run llava`               |
+| Solar              | 10.7B      | 6.1GB | `ollama run solar`               |
 
 > [!NOTE]
 > You should have at least 8 GB of RAM available to run the 7B models, 16 GB to run the 13B models, and 32 GB to run the 33B models.
@@ -377,6 +379,7 @@ See the [API documentation](./docs/api.md) for all endpoints.
 - [Ollama eBook Summary](https://github.com/cognitivetech/ollama-ebook-summary/)
 - [Ollama Mixture of Experts (MOE) in 50 lines of code](https://github.com/rapidarchitect/ollama_moe)
 - [vim-intelligence-bridge](https://github.com/pepo-ec/vim-intelligence-bridge) Simple interaction of "Ollama" with the Vim editor
+- [aichat](https://github.com/sigoden/aichat) All-in-one LLM CLI tool featuring Shell Assistant, Chat-REPL, RAG, AI tools & agents, with access to OpenAI, Claude, Gemini, Ollama, Groq, and more.
 
 ### Apple Vision Pro
 - [Enchanted](https://github.com/AugustDev/enchanted)
@@ -433,6 +436,7 @@ See the [API documentation](./docs/api.md) for all endpoints.
 - [Ollama PHP](https://github.com/ArdaGnsrn/ollama-php)
 - [Agents-Flex for Java](https://github.com/agents-flex/agents-flex) with [example](https://github.com/agents-flex/agents-flex/tree/main/agents-flex-llm/agents-flex-llm-ollama/src/test/java/com/agentsflex/llm/ollama)
 - [Ollama for Swift](https://github.com/mattt/ollama-swift)
+- [GoLamify](https://github.com/prasad89/golamify)
 
 ### Mobile
 
@@ -470,6 +474,7 @@ See the [API documentation](./docs/api.md) for all endpoints.
 - [Discord-Ollama Chat Bot](https://github.com/kevinthedang/discord-ollama) (Generalized TypeScript Discord Bot w/ Tuning Documentation)
 - [Discord AI chat/moderation bot](https://github.com/rapmd73/Companion) Chat/moderation bot written in python. Uses Ollama to create personalities.
 - [Headless Ollama](https://github.com/nischalj10/headless-ollama) (Scripts to automatically install ollama client & models on any OS for apps that depends on ollama server)
+- [Local AI Helper](https://github.com/ivostoykov/localAI) (Chrome and Firefox extensions that enable interactions with the active tab and customisable API endpoints. Includes secure storage for user prompts.)
 - [vnc-lm](https://github.com/jk011ru/vnc-lm) (A containerized Discord bot with support for attachments and web links)
 - [LSP-AI](https://github.com/SilasMarvin/lsp-ai) (Open-source language server for AI-powered functionality)
 - [QodeAssist](https://github.com/Palm1r/QodeAssist) (AI-powered coding assistant plugin for Qt Creator)
