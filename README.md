@@ -20,17 +20,17 @@ For AMD use or build , please follow the guide on [wiki](https://github.com/like
 
 official support list
 ```
-   "gfx900"   "gfx906:xnack-"   "gfx908:xnack-" "gfx90a:xnack+" "gfx90a:xnack-"   "gfx940" "gfx941"  "gfx942"    "gfx1010""gfx1012"  "gfx1030" "gfx1100""gfx1101" "gfx1102"
+   "gfx900" "gfx940" "gfx941"  "gfx942" "gfx1010""gfx1012"  "gfx1030" "gfx1100""gfx1101" "gfx1102"
 ```
 Please download from ollama [official](https://ollama.com/download/OllamaSetup.exe)
 
 Example extra list add on this repo.
 ```
-   "gfx803" "gfx902" "gfx90c:xnack-" "gfx904" "gfx940" "gfx941" "gfx942" "gfx1010:xnack-" "gfx1011" "gfx1012:xnack-"  "gfx1031"  "gfx1032" "gfx1033" "gfx1034" "gfx1035" "gfx1036" "gfx1103" 
+   "gfx803" "gfx902" "gfx90c:xnack-" "gfx904" "gfx1010:xnack-" "gfx1011" "gfx1012:xnack-"  "gfx1031"  "gfx1032" "gfx1033" "gfx1034" "gfx1035" "gfx1036" "gfx1103" "gfx1150(tests only)"
 ```
 Please follow the [wiki](https://github.com/likelovewant/ollama-for-amd/wiki) guide to build or use the pre-release version.
 
-Note: `gfx803` reported partialy working by the wiki method ,expected a future support 
+Note: `gfx803` reported partialy working on HIP SDK 5.7 by the wiki method ,and disabled in HIP SDK 6.1.2 
 
 
 
