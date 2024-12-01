@@ -5,7 +5,7 @@
 
 include make/common-defs.make
 
-HIP_ARCHS_COMMON := gfx803 gfx900 gfx902 gfx90c:xnack- gfx906:xnack- gfx90a:xnack- gfx1010:xnack- gfx1012:xnack- gfx1030 gfx1031 gfx1032 gfx1034 gfx1035 gfx1036 gfx1100 gfx1101 gfx1102 gfx1103 
+HIP_ARCHS_COMMON := gfx803 gfx900 gfx902 gfx1030 gfx1031 gfx1032 gfx1034 gfx1035 gfx1036 gfx1100 gfx1101 gfx1102 gfx1103 gfx1150
 HIP_ARCHS_LINUX := gfx906:xnack- gfx908:xnack- gfx90a:xnack+ gfx90a:xnack- gfx90c:xnack- gfx1010:xnack- gfx1012:xnack-
 
 ifeq ($(OS),windows)
@@ -52,7 +52,7 @@ ifeq ($(OS),linux)
 	GPU_RUNNER_ARCH_FLAGS := $(foreach arch, $(HIP_ARCHS_COMMON) $(HIP_ARCHS_LINUX), --offload-arch=$(arch))
 else ifeq ($(OS),windows)
 	GPU_COMPILER_FPIC := -Xclang --dependent-lib=msvcrt
-	GPU_RUNNER_ARCH_FLAGS := $(foreach arch, $(HIP_ARCHS_COMMON), --offload-arch=$(arch))
+	GPU_RUNNER_ARCH_FLAGS := $(foreach arch, $(HIP_ARCHS_COMMON) $(HIP_ARCHS_LINUX), --offload-arch=$(arch))
 endif
 
 GPU_COMPILER_CUFLAGS = \
