@@ -8,6 +8,7 @@ import (
 	"crypto/ed25519"
 	"crypto/rand"
 	"crypto/sha256"
+	"encoding/json"
 	"encoding/pem"
 	"errors"
 	"fmt"
@@ -1035,10 +1036,14 @@ func chat(cmd *cobra.Command, opts runOptions) (*api.Message, error) {
 		return nil
 	}
 
+	if opts.Format == "json" {
+		opts.Format = `"` + opts.Format + `"`
+	}
+
 	req := &api.ChatRequest{
 		Model:    opts.Model,
 		Messages: opts.Messages,
-		Format:   opts.Format,
+		Format:   json.RawMessage(opts.Format),
 		Options:  opts.Options,
 	}
 
@@ -1120,12 +1125,16 @@ func generate(cmd *cobra.Command, opts runOptions) error {
 		}
 	}
 
+	if opts.Format == "json" {
+		opts.Format = `"` + opts.Format + `"`
+	}
+
 	request := api.GenerateRequest{
 		Model:     opts.Model,
 		Prompt:    opts.Prompt,
 		Context:   generateContext,
 		Images:    opts.Images,
-		Format:    opts.Format,
+		Format:    json.RawMessage(opts.Format),
 		System:    opts.System,
 		Options:   opts.Options,
 		KeepAlive: opts.KeepAlive,
@@ -1445,6 +1454,7 @@ func NewCLI() *cobra.Command {
 				envVars["OLLAMA_SCHED_SPREAD"],
 				envVars["OLLAMA_TMPDIR"],
 				envVars["OLLAMA_FLASH_ATTENTION"],
+				envVars["OLLAMA_KV_CACHE_TYPE"],
 				envVars["OLLAMA_LLM_LIBRARY"],
 				envVars["OLLAMA_GPU_OVERHEAD"],
 				envVars["OLLAMA_LOAD_TIMEOUT"],
