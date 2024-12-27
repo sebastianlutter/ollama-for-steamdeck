@@ -8,7 +8,7 @@
 
 Get up and running with large language models.
 
-### macOS
+### macOS 
 
 [Download](https://ollama.com/download/Ollama-darwin.zip)
 
@@ -34,13 +34,15 @@ Note: `gfx803` reported partialy working on HIP SDK 5.7 by the wiki method ,and 
 
 
 
-### Linux
+### Linux 
 
 ```
 curl -fsSL https://ollama.com/install.sh | sh
 ```
 
 [Manual install instructions](https://github.com/ollama/ollama/blob/main/docs/linux.md)
+
+[Configuring Environment Variables Tip For Unsupport GPUs](https://github.com/likelovewant/ollama-for-amd/wiki#troubleshooting-amd-gpu-support-in-linux)
 
 ### Docker
 
