@@ -26,12 +26,14 @@ Please download from ollama [official](https://ollama.com/download/OllamaSetup.e
 
 Example extra list add on this repo.
 ```
-   "gfx803" "gfx900:xnack-" "gfx902" gfx906:xnack- "gfx90c:xnack-" "gfx1010:xnack-" "gfx1011" "gfx1012:xnack-"  "gfx1031"  "gfx1032" "gfx1034" "gfx1035" "gfx1036" "gfx1103" "gfx1150(expertimental)"...
+   "gfx803" "gfx900:xnack-" "gfx902" gfx906:xnack- "gfx1010:xnack-" "gfx1011" "gfx1012:xnack-"  "gfx1031"  "gfx1032" "gfx1034" "gfx1035" "gfx1036" "gfx1103" "gfx1150(expertimental)"...
 ```
 Please follow the [wiki](https://github.com/likelovewant/ollama-for-amd/wiki) guide to build or use the pre-release version.
 
-Note: `gfx803` reported partialy working on HIP SDK 5.7 by the wiki method ,and disabled in HIP SDK 6.1.2 
+Note: **gfx803:** Reported as partially functional in HIP SDK 5.7 using the wiki method, but disabled in HIP SDK 6.1.2.
 
+Note: **gfx90c (with xnack-):** Reported as partially functional in HIP SDK 5.7, with some testers experiencing partial success while others encountered issues in recent update. removed from
+support lists.  Explore its through self-build as guided on the wiki.
 
 
 ### Linux 
