@@ -6,12 +6,13 @@
 .swp
 0
 dist
+build
 ollama
 .cache
 *.exe
 .idea
 test_data
 *.crt
-llama/build
 __debug_bin*
+llama/build
 llama/vendor
