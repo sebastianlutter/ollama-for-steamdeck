@@ -69,8 +69,8 @@ var (
 	CudaComputeMajorMin = "5"
 	CudaComputeMinorMin = "0"
 )
-
-var RocmComputeMajorMin = "9"
+//change valute from 9 to 8 would reduce realease the gfx version limits ,refer to https://github.com/likelovewant/ollama-for-amd/issues/51
+var RocmComputeMajorMin = "8"
 
 // TODO find a better way to detect iGPU instead of minimum memory
 const IGPUMemLimit = 1 * format.GibiByte // 512G is what they typically report, so anything less than 1G must be iGPU
