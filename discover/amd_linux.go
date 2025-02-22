@@ -304,16 +304,16 @@ func AMDGetGPUInfo() ([]RocmGPUInfo, error) {
 		if err != nil {
 			slog.Error("invalid RocmComputeMajorMin setting", "value", RocmComputeMajorMin, "error", err)
 		}
-		if int(major) < minVer {
-			reason := fmt.Sprintf("amdgpu too old gfx%d%x%x", major, minor, patch)
-			slog.Warn(reason, "gpu", gpuID)
-			unsupportedGPUs = append(unsupportedGPUs, UnsupportedGPUInfo{
-				GpuInfo: gpuInfo.GpuInfo,
-				Reason:  reason,
-			})
+		// if int(major) < minVer {
+		//	reason := fmt.Sprintf("amdgpu too old gfx%d%x%x", major, minor, patch)
+		//	slog.Warn(reason, "gpu", gpuID)
+		//	unsupportedGPUs = append(unsupportedGPUs, UnsupportedGPUInfo{
+		//		GpuInfo: gpuInfo.GpuInfo,
+		//		Reason:  reason,
+		//	})
 
-			continue
-		}
+		//	continue
+		//}
 
 		slog.Debug("amdgpu memory", "gpu", gpuID, "total", format.HumanBytes2(totalMemory))
 		slog.Debug("amdgpu memory", "gpu", gpuID, "available", format.HumanBytes2(totalMemory-usedMemory))
