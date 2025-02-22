@@ -69,7 +69,7 @@ var (
 	CudaComputeMajorMin = "5"
 	CudaComputeMinorMin = "0"
 )
-//change valute from 9 to 8 would reduce realease the gfx version limits ,refer to https://github.com/likelovewant/ollama-for-amd/issues/51
+//change valute from 9 to 8 would  release the gfx version limits ,refer to https://github.com/likelovewant/ollama-for-amd/issues/51
 var RocmComputeMajorMin = "8"
 
 // TODO find a better way to detect iGPU instead of minimum memory
