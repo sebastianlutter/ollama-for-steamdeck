@@ -7,7 +7,6 @@
 0
 dist
 build
-ollama
 .cache
 *.exe
 .idea
@@ -16,3 +15,4 @@ test_data
 __debug_bin*
 llama/build
 llama/vendor
+/ollama
