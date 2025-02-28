@@ -14,6 +14,7 @@ type Config interface {
 	String(string, ...string) string
 	Uint(string, ...uint32) uint32
 	Float(string, ...float32) float32
+	Bool(string, ...bool) bool
 
 	Strings(string, ...[]string) []string
 	Uints(string, ...[]uint32) []uint32
@@ -64,7 +65,7 @@ type Context interface {
 	FromFloatSlice(s []float32, shape ...int) (Tensor, error)
 	FromIntSlice(s []int32, shape ...int) (Tensor, error)
 
-	Forward(Tensor)
+	Forward(...Tensor) Context
 	Compute(...Tensor)
 	MaxTensors() int
 	Close()
@@ -185,8 +186,7 @@ func Dump(ctx Context, t Tensor, opts ...DumpOptions) string {
 
 func dump[S ~[]E, E number](ctx Context, t Tensor, items int, fn func(E) string) string {
 	if t.Bytes() == nil {
-		ctx.Forward(t)
-		ctx.Compute(t)
+		ctx.Forward(t).Compute(t)
 	}
 
 	s := make(S, mul(t.Shape()...))

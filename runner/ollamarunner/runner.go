@@ -575,23 +575,11 @@ func (s *Server) completion(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sampler, err := sample.NewSampler(
-		req.Temperature,
-		req.TopK,
-		req.TopP,
-		req.MinP,
-		req.Seed,
-	)
-	if err != nil {
-		http.Error(w, fmt.Sprintf("Failed to create sampler: %v", err), http.StatusInternalServerError)
-		return
-	}
-
 	seq, err := s.NewSequence(req.Prompt, req.Images, NewSequenceParams{
 		numPredict: req.NumPredict,
 		stop:       req.Stop,
 		numKeep:    int32(req.NumKeep),
-		sampler:    sampler,
+		sampler:    sample.Greedy(), // TODO: add support for different samplers when performance is optimized
 		embedding:  false,
 	})
 	if err != nil {
@@ -881,12 +869,11 @@ func Execute(args []string) error {
 
 	var tensorSplitFloats []float32
 	if *tensorSplit != "" {
-		stringFloats := regexp.MustCompile(",").Split(*tensorSplit, -1)
-
-		tensorSplitFloats = make([]float32, 0, len(stringFloats))
-		for _, s := range stringFloats {
+		splits := strings.Split(*tensorSplit, ",")
+		tensorSplitFloats = make([]float32, len(splits))
+		for i, s := range splits {
 			f, _ := strconv.ParseFloat(s, 32)
-			tensorSplitFloats = append(tensorSplitFloats, float32(f))
+			tensorSplitFloats[i] = float32(f)
 		}
 	}
 
