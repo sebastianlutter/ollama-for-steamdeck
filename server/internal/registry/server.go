@@ -11,7 +11,6 @@ import (
 	"log/slog"
 	"net/http"
 
-	"github.com/ollama/ollama/server/internal/cache/blob"
 	"github.com/ollama/ollama/server/internal/client/ollama"
 )
 
@@ -27,12 +26,15 @@ import (
 // directly to the blob disk cache.
 type Local struct {
 	Client *ollama.Registry // required
-	Cache  *blob.DiskCache  // required
 	Logger *slog.Logger     // required
 
 	// Fallback, if set, is used to handle requests that are not handled by
 	// this handler.
 	Fallback http.Handler
+
+	// Prune, if set, is called to prune the local disk cache after a model
+	// is deleted.
+	Prune func() error // optional
 }
 
 // serverError is like ollama.Error, but with a Status field for the HTTP
@@ -199,14 +201,17 @@ func (s *Local) handleDelete(_ http.ResponseWriter, r *http.Request) error {
 	if err != nil {
 		return err
 	}
-	ok, err := s.Client.Unlink(s.Cache, p.model())
+	ok, err := s.Client.Unlink(p.model())
 	if err != nil {
 		return err
 	}
 	if !ok {
 		return &serverError{404, "not_found", "model not found"}
 	}
-	return nil
+	if s.Prune == nil {
+		return nil
+	}
+	return s.Prune()
 }
 
 func decodeUserJSON[T any](r io.Reader) (T, error) {
