@@ -86,21 +86,6 @@ if(CMAKE_CUDA_COMPILER)
     )
 endif()
 
-set(AMDGPU_TARGETS 
-    gfx1010:xnack- 
-    gfx1011 
-    gfx1012:xnack- 
-    gfx1030 
-    gfx1031 
-    gfx1032 
-    gfx1034 
-    gfx1035 
-    gfx1100 
-    gfx1101 
-    gfx1102 
-    gfx1103 
-    gfx1150 
-    CACHE STRING "List of AMDGPU targets to build for")
     
 set(WINDOWS_AMDGPU_TARGETS_EXCLUDE_REGEX ""
     CACHE STRING
