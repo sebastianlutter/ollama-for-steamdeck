@@ -25,6 +25,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"runtime/debug"
 	"slices"
 	"strconv"
 	"strings"
@@ -36,7 +37,6 @@ import (
 	"golang.org/x/sync/errgroup"
 
 	"github.com/ollama/ollama/server/internal/cache/blob"
-	"github.com/ollama/ollama/server/internal/chunks"
 	"github.com/ollama/ollama/server/internal/internal/backoff"
 	"github.com/ollama/ollama/server/internal/internal/names"
 
@@ -260,6 +260,7 @@ func DefaultRegistry() (*Registry, error) {
 	}
 
 	var rc Registry
+	rc.UserAgent = UserAgent()
 	rc.Key, err = ssh.ParseRawPrivateKey(keyPEM)
 	if err != nil {
 		return nil, err
@@ -273,6 +274,16 @@ func DefaultRegistry() (*Registry, error) {
 		}
 	}
 	return &rc, nil
+}
+
+func UserAgent() string {
+	buildinfo, _ := debug.ReadBuildInfo()
+	return fmt.Sprintf("ollama/%s (%s %s) Go/%s",
+		buildinfo.Main.Version,
+		runtime.GOARCH,
+		runtime.GOOS,
+		runtime.Version(),
+	)
 }
 
 func (r *Registry) maxStreams() int {
@@ -500,7 +511,7 @@ func (r *Registry) Pull(ctx context.Context, name string) error {
 						if err != nil {
 							return err
 						}
-						req.Header.Set("Range", fmt.Sprintf("bytes=%s", cs.Chunk))
+						req.Header.Set("Range", fmt.Sprintf("bytes=%d-%d", cs.Chunk.Start, cs.Chunk.End))
 						res, err := sendRequest(r.client(), req)
 						if err != nil {
 							return err
@@ -794,7 +805,7 @@ func (r *Registry) chunksums(ctx context.Context, name string, l *Layer) iter.Se
 				yield(chunksum{}, err)
 				return
 			}
-			chunk, err := chunks.Parse(s.Bytes())
+			chunk, err := parseChunk(s.Bytes())
 			if err != nil {
 				yield(chunksum{}, fmt.Errorf("invalid chunk range for digest %s: %q", d, s.Bytes()))
 				return
@@ -1058,4 +1069,24 @@ func splitExtended(s string) (scheme, name, digest string) {
 		s = s[:i]
 	}
 	return scheme, s, digest
+}
+
+// parseChunk parses a string in the form "start-end" and returns the Chunk.
+func parseChunk[S ~string | ~[]byte](s S) (blob.Chunk, error) {
+	startPart, endPart, found := strings.Cut(string(s), "-")
+	if !found {
+		return blob.Chunk{}, fmt.Errorf("chunks: invalid range %q: missing '-'", s)
+	}
+	start, err := strconv.ParseInt(startPart, 10, 64)
+	if err != nil {
+		return blob.Chunk{}, fmt.Errorf("chunks: invalid start to %q: %v", s, err)
+	}
+	end, err := strconv.ParseInt(endPart, 10, 64)
+	if err != nil {
+		return blob.Chunk{}, fmt.Errorf("chunks: invalid end to %q: %v", s, err)
+	}
+	if start > end {
+		return blob.Chunk{}, fmt.Errorf("chunks: invalid range %q: start > end", s)
+	}
+	return blob.Chunk{Start: start, End: end}, nil
 }
