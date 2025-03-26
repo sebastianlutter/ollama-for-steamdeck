@@ -2,6 +2,13 @@
 
 set -eu
 
+docker buildx create --use \
+  --name mybuilder \
+  --driver docker-container \
+  --config $(dirname $0)/buildkitd.toml
+
+docker buildx use --default mybuilder
+
 . $(dirname $0)/env.sh
 
 # Set PUSH to a non-empty string to trigger push instead of load
