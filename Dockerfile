@@ -31,6 +31,25 @@ RUN --mount=type=cache,target=/root/.ccache \
         && cmake --build --parallel --preset 'CPU' \
         && cmake --install build --component CPU --strip --parallel 8
 
+FROM base AS cuda-11
+ARG CUDA11VERSION=11.3
+RUN dnf install -y cuda-toolkit-${CUDA11VERSION//./-}
+ENV PATH=/usr/local/cuda-11/bin:$PATH
+RUN --mount=type=cache,target=/root/.ccache \
+    cmake --preset 'CUDA 11' \
+        && cmake --build --parallel --preset 'CUDA 11' \
+        && cmake --install build --component CUDA --strip --parallel 8
+
+FROM base AS cuda-12
+ARG CUDA12VERSION=12.8
+RUN dnf install -y cuda-toolkit-${CUDA12VERSION//./-}
+ENV PATH=/usr/local/cuda-12/bin:$PATH
+RUN --mount=type=cache,target=/root/.ccache \
+    cmake --preset 'CUDA 12' \
+        && cmake --build --parallel --preset 'CUDA 12' \
+        && cmake --install build --component CUDA --strip --parallel 8
+
+
 FROM base AS rocm-6
 ENV PATH=/opt/rocm/hcc/bin:/opt/rocm/hip/bin:/opt/rocm/bin:/opt/rocm/hcc/bin:$PATH
 RUN --mount=type=cache,target=/root/.ccache \
@@ -51,6 +70,8 @@ RUN --mount=type=cache,target=/root/.cache/go-build \
     go build -trimpath -buildmode=pie -o /bin/ollama .
 
 FROM --platform=linux/amd64 scratch AS amd64
+COPY --from=cuda-11 dist/lib/ollama/cuda_v11 /lib/ollama/cuda_v11
+COPY --from=cuda-12 dist/lib/ollama/cuda_v12 /lib/ollama/cuda_v12
 
 FROM scratch AS rocm
 COPY --from=rocm-6 dist/lib/ollama/rocm /lib/ollama/rocm
@@ -64,21 +85,26 @@ RUN apt-get update \
     && apt-get install -y ca-certificates \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-RUN apt-get update && apt-get install -y wget gnupg2 && \
-    wget -qO - http://repo.radeon.com/rocm/rocm.gpg.key | apt-key add - && \
-    echo "deb [arch=amd64] http://repo.radeon.com/rocm/apt/6.3.3/ ubuntu main" > /etc/apt/sources.list.d/rocm.list && \
-    apt-get update && apt-get install -y rocm-libs
+COPY --from=archive /bin /usr/bin
+COPY --from=rocm-6 dist/lib/ollama/rocm /usr/lib/ollama/rocm
+COPY --from=archive /lib/ollama /usr/lib/ollama
+RUN cp /usr/lib/ollama/rocm/libggml-* /usr/lib/ollama/
+#RUN apt-get update && apt-get install -y wget gnupg2 && \
+#    wget -qO - http://repo.radeon.com/rocm/rocm.gpg.key | apt-key add - && \
+#    echo "deb [arch=amd64] http://repo.radeon.com/rocm/apt/6.3.3/ ubuntu main" > /etc/apt/sources.list.d/rocm.list && \
+#    apt-get update && apt-get install -y rocm-libs
 RUN apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-COPY --from=archive /bin /usr/bin
-#COPY --from=rocm-6 dist/lib/ollama/rocm /lib/ollama/rocm
-ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-COPY --from=archive /lib/ollama /usr/lib/ollama
-ENV LD_LIBRARY_PATH=/usr/local/nvidia/lib:/usr/local/nvidia/lib64
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/rocm/bin
+ENV LD_LIBRARY_PATH=/opt/rocm/lib:/usr/lib/ollama
 ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
 ENV NVIDIA_VISIBLE_DEVICES=all
 ENV OLLAMA_HOST=0.0.0.0:11434
 ENV HSA_OVERRIDE_GFX_VERSION=10.3.3
+ENV OLLAMA_FLASH_ATTENTION=1
+ENV OLLAMA_LLM_LIBRARY="rocm_v6"
+ENV OLLAMA_DEBUG=1
+ENV AMD_LOG_LEVEL=3
 EXPOSE 11434
 ENTRYPOINT ["/bin/ollama"]
 CMD ["serve"]
