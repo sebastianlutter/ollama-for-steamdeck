@@ -51,6 +51,13 @@ git clone git@github.com:sebastianlutter/ollama-for-steamdeck.git
 
 * Set the gfx version for `AMDGPU_TARGETS` in `CMakePresets.json` and `CMakeLists.txt` [from this guide](https://github.com/likelovewant/ollama-for-amd/wiki)
 
+* Create build context with parallel limit set to 1
+```
+docker buildx create --use \
+  --name mybuilder \
+  --driver docker-container \
+  --config $(dirname $0)/buildkitd.toml
+```
 * Build the docker for steamdeck
 ```
 cd ollama-for-amd

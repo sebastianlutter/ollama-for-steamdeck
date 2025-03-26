@@ -2,10 +2,10 @@
 
 set -eu
 
-docker buildx create --use \
-  --name mybuilder \
-  --driver docker-container \
-  --config $(dirname $0)/buildkitd.toml
+#docker buildx create --use \
+#  --name mybuilder \
+#  --driver docker-container \
+#  --config $(dirname $0)/buildkitd.toml
 
 docker buildx use --default mybuilder
 
