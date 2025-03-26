@@ -2,9 +2,13 @@
 
 ## Use the prebuild docker image
 ```
-docker run --device /dev/kfd --device /dev/dri -v /home/deck/ollama:/root/.ollama -p 11434:11434 --name ollama sebastianlutter/ollama-for-steamdeck:0.6.3-gfx1033-rocm6.3.3
+docker run -e OLLAMA_DEBUG=1 --rm --device /dev/kfd --device /dev/dri -v $(pwd)/ollama:/root/.ollama -p 11434:11434 --name ollama sebastianlutter/ollama-for-steamdeck:0.6.3-gfx1033-rocm6.3.3
 ```
 
+* Get a shell in the running docker
+```
+docker exec -it $(docker ps --format "{{.ID}}" --filter "name=ollama") bash
+```
 
 ## Build the docker on your steamdeck
 * Steam OS 3.6.22

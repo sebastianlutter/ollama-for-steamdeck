@@ -64,8 +64,14 @@ RUN apt-get update \
     && apt-get install -y ca-certificates \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-
+RUN apt-get update && apt-get install -y wget gnupg2 && \
+    wget -qO - http://repo.radeon.com/rocm/rocm.gpg.key | apt-key add - && \
+    echo "deb [arch=amd64] http://repo.radeon.com/rocm/apt/6.3.3/ ubuntu main" > /etc/apt/sources.list.d/rocm.list && \
+    apt-get update && apt-get install -y rocm-libs
+RUN apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 COPY --from=archive /bin /usr/bin
+#COPY --from=rocm-6 dist/lib/ollama/rocm /lib/ollama/rocm
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 COPY --from=archive /lib/ollama /usr/lib/ollama
 ENV LD_LIBRARY_PATH=/usr/local/nvidia/lib:/usr/local/nvidia/lib64
