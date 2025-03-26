@@ -6,6 +6,10 @@
 
 # Ollama
 
+## For use with steam deck
+
+This project is forked from [](). Read [README.STEAMDECK.md](./README.STEAMDECK.md) on how to use it. 
+
 Get up and running with large language models.
 
 ### macOS 
@@ -578,7 +582,6 @@ See the [API documentation](./docs/api.md) for all endpoints.
 - [Discord AI chat/moderation bot](https://github.com/rapmd73/Companion) Chat/moderation bot written in python. Uses Ollama to create personalities.
 - [Headless Ollama](https://github.com/nischalj10/headless-ollama) (Scripts to automatically install ollama client & models on any OS for apps that depends on ollama server)
 - [Terraform AWS Ollama & Open WebUI](https://github.com/xuyangbocn/terraform-aws-self-host-llm) (A Terraform module to deploy on AWS a ready-to-use Ollama service, together with its front end Open WebUI service.)
-- [node-red-contrib-ollama](https://github.com/jakubburkiewicz/node-red-contrib-ollama)
 - [Local AI Helper](https://github.com/ivostoykov/localAI) (Chrome and Firefox extensions that enable interactions with the active tab and customisable API endpoints. Includes secure storage for user prompts.)
 - [vnc-lm](https://github.com/jake83741/vnc-lm) (Discord bot for messaging with LLMs through Ollama and LiteLLM. Seamlessly move between local and flagship models.)
 - [LSP-AI](https://github.com/SilasMarvin/lsp-ai) (Open-source language server for AI-powered functionality)
