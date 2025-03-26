@@ -2,7 +2,7 @@
 
 ARG FLAVOR=${TARGETARCH}
 
-ARG ROCMVERSION=6.1
+ARG ROCMVERSION=6.3.3
 ARG JETPACK5VERSION=r35.4.1
 ARG JETPACK6VERSION=r36.4.0
 ARG CMAKEVERSION=3.31.2
@@ -97,7 +97,7 @@ ENV CGO_ENABLED=1
 RUN --mount=type=cache,target=/root/.cache/go-build \
     go build -trimpath -buildmode=pie -o /bin/ollama .
 
-#FROM --platform=linux/amd64 scratch AS amd64
+FROM --platform=linux/amd64 scratch AS amd64
 #COPY --from=cuda-11 dist/lib/ollama/cuda_v11 /lib/ollama/cuda_v11
 #COPY --from=cuda-12 dist/lib/ollama/cuda_v12 /lib/ollama/cuda_v12
 
