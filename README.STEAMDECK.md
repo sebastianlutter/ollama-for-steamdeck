@@ -2,7 +2,7 @@
 
 ## Use the prebuild docker image
 ```
-docker pull 
+docker run --device /dev/kfd --device /dev/dri -v /home/deck/ollama:/root/.ollama -p 11434:11434 --name ollama sebastianlutter/ollama-for-steamdeck:0.6.3-gfx1033-rocm6.3.3
 ```
 
 
@@ -50,5 +50,5 @@ git clone git@github.com:sebastianlutter/ollama-for-steamdeck.git
 * Build the docker for steamdeck
 ```
 cd ollama-for-amd
-./scripts/build_linux.sh
+./scripts/build_docker.sh
 ```
